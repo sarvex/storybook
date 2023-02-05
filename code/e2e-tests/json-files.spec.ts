@@ -1,9 +1,17 @@
+/* eslint-disable jest/no-disabled-tests */
 import { test, expect } from '@playwright/test';
 import process from 'process';
 
 const storybookUrl = process.env.STORYBOOK_URL || 'http://localhost:8001';
+const templateName = process.env.STORYBOOK_TEMPLATE_NAME;
 
 test.describe('JSON files', () => {
+  test.skip(
+    // eslint-disable-next-line jest/valid-title
+    !templateName.includes('ssv6'),
+    'Only run this test for Sandboxes with StoryStoreV7 enabled'
+  );
+
   test.beforeEach(async ({ page }) => {
     await page.goto(storybookUrl);
   });
